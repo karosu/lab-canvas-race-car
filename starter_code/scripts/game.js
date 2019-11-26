@@ -30,22 +30,26 @@ class Game {
       this.drawBackground();
       this.drawMainCharacters();
       this.car.move();
-      for (let obstacle of this.obstacles) {
-        obstacle.move();
-        obstacle.draw();
+      for (let i = 0; i < this.obstacles.length; obstacles++) {
+        this.obstacles[i].move();
+        this.obstacles[i].draw();
+        this.car.crashCollision(this.obstacles[i]);
+        if (this.obstacles[i].y > 800) {
+          this.obstacles.splice(i, 1);
+        }
       }
-    }, 2000 / 60);
+    }, 1000 / 60);
   }
 
   createObstacles() {
-    if (Math.floor(Math.random() * 25) % 3 === 0) {
+    if (Math.floor(Math.random() * 25) % 2 === 0) {
       this.obstacles.push(new Obstacle(this));
       console.log("obstacle == ", this.obstacles);
     }
 
     setTimeout(() => {
       this.createObstacles();
-    }, 1000);
+    }, 3000);
   }
 
   drawBackground() {
